@@ -1,121 +1,130 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
 
+const initialForm = {
+  age: '',
+  gender: '2',
+  height: '',
+  weight: '',
+  ap_hi: '',
+  ap_lo: '',
+  cholesterol: '1',
+  gluc: '1',
+  smoke: '0',
+  alco: '0',
+  active: '1',
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [form, setForm] = useState(initialForm)
+  const [submitted, setSubmitted] = useState(null)
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSubmitted(form)
+    console.log('Form data:', form)
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="container">
+      <h1>Cardiovascular Risk Digital Twin</h1>
+      <p className="subtitle">Enter patient details to estimate risk.</p>
 
-      <div className="ticks"></div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Age (years)
+          <input type="number" name="age" min="1" max="120"
+            value={form.age} onChange={handleChange} required />
+        </label>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <label>
+          Gender
+          <select name="gender" value={form.gender} onChange={handleChange}>
+            <option value="2">Male</option>
+            <option value="1">Female</option>
+          </select>
+        </label>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <label>
+          Height (cm)
+          <input type="number" name="height" min="100" max="220"
+            value={form.height} onChange={handleChange} required />
+        </label>
+
+        <label>
+          Weight (kg)
+          <input type="number" name="weight" min="30" max="200"
+            value={form.weight} onChange={handleChange} required />
+        </label>
+
+        <label>
+          Systolic BP (ap_hi)
+          <input type="number" name="ap_hi" min="70" max="250"
+            value={form.ap_hi} onChange={handleChange} required />
+        </label>
+
+        <label>
+          Diastolic BP (ap_lo)
+          <input type="number" name="ap_lo" min="40" max="150"
+            value={form.ap_lo} onChange={handleChange} required />
+        </label>
+
+        <label>
+          Cholesterol
+          <select name="cholesterol" value={form.cholesterol} onChange={handleChange}>
+            <option value="1">Normal</option>
+            <option value="2">Above normal</option>
+            <option value="3">Well above normal</option>
+          </select>
+        </label>
+
+        <label>
+          Glucose
+          <select name="gluc" value={form.gluc} onChange={handleChange}>
+            <option value="1">Normal</option>
+            <option value="2">Above normal</option>
+            <option value="3">Well above normal</option>
+          </select>
+        </label>
+
+        <label>
+          Smoker
+          <select name="smoke" value={form.smoke} onChange={handleChange}>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </label>
+
+        <label>
+          Alcohol intake
+          <select name="alco" value={form.alco} onChange={handleChange}>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </label>
+
+        <label>
+          Physically active
+          <select name="active" value={form.active} onChange={handleChange}>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </label>
+
+        <button type="submit">Predict Risk</button>
+      </form>
+
+      {submitted && (
+        <div className="result">
+          <h2>Submitted data</h2>
+          <pre>{JSON.stringify(submitted, null, 2)}</pre>
+        </div>
+      )}
+    </div>
   )
 }
 
